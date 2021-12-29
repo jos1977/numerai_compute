@@ -4,7 +4,7 @@ This repository contains different Numerai Compute cloud examples for the [Numer
 
 This repository contains the following projects:
 
-- Numerai Azure Compute example, see [here](https://github.com/jos1977/numerai_statistics/blob/main/classic/src/Python/Sync_Git.ipynb)
+- Numerai Azure Compute example, see [here](https://github.com/jos1977/numerai_compute/blob/main/azure/README.md)
 - Numerai Oracle Compute example, TBD!
 
 ## Disclaimer
