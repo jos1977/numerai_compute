@@ -1,0 +1,4 @@
+.vs/*
+.vs/VSWorkspaceState.json
+/azure/tournament-python3/.vscode
+/.vscode

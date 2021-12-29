@@ -1,0 +1,123 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerGroups_name": {
+            "defaultValue": "testcontainer",
+            "type": "String"
+        },
+        "containerGroups_Image": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "containerGroups_memoryInGB": {
+            "defaultValue": "2.5",
+            "type": "String"
+        },	
+        "containerGroups_Cpu": {
+            "defaultValue": "1",
+            "type": "String"
+        },			
+		"containerGroups_overwriteOldSubmissions": {
+            "defaultValue": "false",
+            "type": "String"
+        },
+		"containerGroups_publicId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"containerGroups_secretKey": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"containerGroups_modelId": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"imageRegistry_Uri": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"imageRegistry_Login": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"imageRegistry_Password": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"location": {
+            "defaultValue": "",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-09-01",
+            "name": "[parameters('containerGroups_name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": "Standard",
+                "containers": [
+                    {
+                        "name": "[parameters('containerGroups_name')]",
+                        "properties": {
+                            "image": "[parameters('containerGroups_Image')]",
+                            "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 80
+                                }
+                            ],
+                            "environmentVariables": [
+                                {
+                                    "name": "overwriteOldSubmissions",
+                                    "value": "[parameters('containerGroups_overwriteOldSubmissions')]"
+                                },
+                                {
+                                    "name": "public_id",
+									"secureValue": "[parameters('containerGroups_publicId')]" 
+                                },
+                                {
+                                    "name": "secret_key",
+									"secureValue": "[parameters('containerGroups_secretKey')]"
+                                },
+                                {
+                                    "name": "model_id",
+									"secureValue": "[parameters('containerGroups_modelId')]"
+                                }
+                            ],
+                            "resources": {
+                                "requests": {
+                                    "memoryInGB": "[parameters('containerGroups_memoryInGB')]",
+                                    "cpu": "[parameters('containerGroups_Cpu')]"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "initContainers": [],
+                "imageRegistryCredentials": [
+                    {
+                        "server": "[parameters('imageRegistry_Uri')]",
+                        "username": "[parameters('imageRegistry_Login')]",
+						"password": "[parameters('imageRegistry_Password')]"
+                    }
+                ],
+                "restartPolicy": "Never",
+                "ipAddress": {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 80
+                        }
+                    ],
+                    "type": "Public"
+                },
+                "osType": "Linux"
+            }
+        }
+    ]
+}

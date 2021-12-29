@@ -1,0 +1,134 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_start_aci_name": {
+            "defaultValue": "startaci",
+            "type": "String"
+        },
+		"resourceGroup_name": {
+            "defaultValue": "test",
+            "type": "String"
+        },
+		"subscription_id": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"aci_name": {
+			"defaultValue": "",
+			"type": "String"
+		},
+        "location": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"connections_aci_externalid": {
+            "defaultValue": "",
+            "type": "String"
+        },
+		"connections_path": {
+		  "defaultValue": "",
+		  "type": "String"
+		    }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_start_aci_name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        },
+						"$connpath": {
+							"defaultValue": {},
+							"type": "Object"
+						}
+                    },
+                    "triggers": {
+                        "request": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "dataVersion": {
+                                            "type": "integer"
+                                        },
+                                        "isTest": {
+                                            "type": "boolean"
+                                        },
+                                        "roundNumber": {
+                                            "type": "string"
+                                        },
+                                        "triggerId": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Response": {
+                            "runAfter": {
+                                "Start_containers_in_a_container_group": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Response",
+                            "inputs": {
+                                "statusCode": 200
+                            }
+                        },
+                        "Start_containers_in_a_container_group": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "parameters('$connections')['aci']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "[concat('/subscriptions/',parameters('subscription_id'),'/resourceGroups/',parameters('resourceGroup_name'),'/providers/Microsoft.ContainerInstance/containerGroups/',parameters('aci_name'),'/start')]",
+                                "queries": {
+                                    "x-ms-api-version": "2019-12-01"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "aci": {
+                                "connectionId": "[parameters('connections_aci_externalid')]",
+                                "connectionName": "aci",
+                                "id": "[concat('/subscriptions/',parameters('subscription_id'),'/providers/Microsoft.Web/locations/',parameters('location'),'/managedApis/aci')]"
+                            }
+                        }
+                    },
+					"$connpath": {
+						"value": {
+							"aci": {
+								"path": "[concat('/subscriptions/',parameters('subscription_id'),'/resourceGroups/',parameters('resourceGroup_name'),'/providers/Microsoft.ContainerInstance/containerGroups/',parameters('aci_name'),'/start')]"
+							}
+						}
+		
+					}
+                }
+            }
+        }
+    ]
+}

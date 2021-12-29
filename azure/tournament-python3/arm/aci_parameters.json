@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerGroups_name": {
+            "value": "test-container"
+        },
+		"containerGroups_Image": {
+            "value": ""
+        },
+		"containerGroups_memoryInGB": {
+            "value": "2.5"
+        },
+		"containerGroups_Cpu": {
+            "value": "1"
+        },
+		"containerGroups_overwriteOldSubmissions": {
+            "value": "false"
+        },
+		"containerGroups_publicId": {
+            "value": ""
+        },
+		"containerGroups_secretKey": {
+            "value": ""
+        },
+		"containerGroups_modelId": {
+            "value": ""
+        },
+		"imageRegistry_Uri": {
+            "value": "index.docker.io"
+        },
+		"imageRegistry_Login": {
+            "value": ""
+        },
+		"imageRegistry_Password": {
+            "value": ""
+        },
+		"location": {
+			"value": ""
+		}
+    }
+}
