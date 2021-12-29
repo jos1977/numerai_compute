@@ -53,8 +53,8 @@ Note: the assumption is that the docker tools on the local environment eare alre
 -  No go to your Azure environment and open the new Logic App, select Edit
 -  Open 'start containeers in your resource group', over here you need to authorize the connection manually since the script cant to this, see screenshots below. Its just a matter of signing in once with your azure credentials and then save the logic app again.
 
-![Logic App Conn1](docs/Azure Conn1.png "Azure App Conn1")
-![Logic App Conn2](docs/Azure Conn2.png "Logic App Conn2")
+![Logic App Conn1](https://github.com/jos1977/numerai_compute/blob/main/azure/docs/Azure%20Conn.png "Azure App Conn1")
+![Logic App Conn2](https://github.com/jos1977/numerai_compute/blob/main/azure/docs/Azure%20Conn%202.png "Logic App Conn2")
 
 ## Issues, Contact
 If you encounter any problem or have suggestions, feel free to open an issue or contact me at Numerai (orum / rocketchat / dm). My handle at RocketChat is 'QE', my handle in the forum is 'qeintelligence'.
