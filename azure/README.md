@@ -6,7 +6,7 @@ The Azure compute environment contains the following components:
 - Logic App: Business Logic used which starts Docker Containers in ACI, and can be triggered through webhook from Numerai
 - API Connector: connector used between ACI and Logic App to handle start commands
 
-![Azure Compute Envirojnmen](docs/Azure ACI.png "Azure Compute Environment")
+![Azure Compute Envirojnmen](https://github.com/jos1977/numerai_compute/blob/main/azure/docs/Azure%20ACI.png "Azure Compute Environment")
 
 ## Prerequisites
 The following is required to deploy Dockers containers to Docker Hub and run containers in Azure:
